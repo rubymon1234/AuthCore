@@ -1,0 +1,39 @@
+﻿@using AuthCore.ViewModel
+@{
+    ViewData["Title"] = "Product Page";
+}
+@model ProductView
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <a class="btn btn-primary" asp-controller="Product" asp-action="Create" role="button">Create Product</a>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Product Code</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Total Quantity</th>
+                    <th scope="col">InStock</th>
+                    <th scope="col">Manage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>dd</td>
+                    <td>dd</td>
+                    <td>sd</td>
+                    <td>Manage</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
