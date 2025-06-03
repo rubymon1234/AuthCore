@@ -1,4 +1,4 @@
-﻿namespace AuthCore.ViewModel
+﻿namespace ShoppyWeb.ViewModel
 {
     public class ProductView
     {
@@ -10,5 +10,6 @@
         public DateTime CreatedOn { get; set; }
 
         public string imageurl { get; set; }
+        public string catagoryName { get; set; }
     }
 }

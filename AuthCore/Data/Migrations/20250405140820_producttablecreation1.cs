@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace AuthCore.Data.Migrations
+namespace ShoppyWeb.Data.Migrations
 {
     /// <inheritdoc />
     public partial class producttablecreation1 : Migration

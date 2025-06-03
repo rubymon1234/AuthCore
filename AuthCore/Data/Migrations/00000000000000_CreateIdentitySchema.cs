@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AuthCore.Data.Migrations
+namespace ShoppyWeb.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

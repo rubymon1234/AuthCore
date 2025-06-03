@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthCore", "AuthCore\AuthCore.csproj", "{698206BB-E32A-4E44-A4F1-10D877176B76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppyWeb", "AuthCore\ShoppyWeb.csproj", "{698206BB-E32A-4E44-A4F1-10D877176B76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppyWeb.DataAccess", "ShoppyWeb.DataAccess\ShoppyWeb.DataAccess.csproj", "{A396F52E-66D2-44D4-A037-7B6F737BB5B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppyWeb.Models", "ShoppyWeb.Models\ShoppyWeb.Models.csproj", "{4F279B82-7F73-4361-A9FC-FB9D154C21EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShoppyWeb.Utility", "ShoppyWeb.Utility\ShoppyWeb.Utility.csproj", "{D2C583FF-547A-4ED4-892C-3ACADB11DB8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{698206BB-E32A-4E44-A4F1-10D877176B76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{698206BB-E32A-4E44-A4F1-10D877176B76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{698206BB-E32A-4E44-A4F1-10D877176B76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A396F52E-66D2-44D4-A037-7B6F737BB5B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A396F52E-66D2-44D4-A037-7B6F737BB5B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A396F52E-66D2-44D4-A037-7B6F737BB5B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A396F52E-66D2-44D4-A037-7B6F737BB5B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F279B82-7F73-4361-A9FC-FB9D154C21EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F279B82-7F73-4361-A9FC-FB9D154C21EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F279B82-7F73-4361-A9FC-FB9D154C21EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F279B82-7F73-4361-A9FC-FB9D154C21EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C583FF-547A-4ED4-892C-3ACADB11DB8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C583FF-547A-4ED4-892C-3ACADB11DB8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C583FF-547A-4ED4-892C-3ACADB11DB8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C583FF-547A-4ED4-892C-3ACADB11DB8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,4 @@
-namespace AuthCore.Models
+namespace ShoppyWeb.Models
 {
     public class ErrorViewModel
     {

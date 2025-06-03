@@ -1,0 +1,67 @@
+﻿@using ShoppyWeb.ViewModel
+@{
+    ViewData["Title"] = "Product Page";
+}
+@model List<ShoppyWeb.ViewModel.ProductView>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">Bordered Table</h3>
+                <a class="btn btn-primary float-end" asp-controller="Product" asp-action="Create" role="button">Create Product</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Product Code</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Total Quantity</th>
+                            <th scope="col">Image</th>
+                            <th scope="col">CatagoryName</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int i = 1;
+                        }
+                        @foreach (var product in Model)
+                        {
+                            <tr>
+                                <th scope="row">@i</th>
+                                <td>@product.ProductName</td>
+                                <td>@product.ProductCode</td>
+                                <td>@product.Price</td>
+                                <td>@product.Quantity</td>
+                                <td><img class="card-img-top" data-src="../../@product.imageurl" alt="Thumbnail" src="../../@product.imageurl" data-holder-rendered="true" asp-append-version="true" style="height: 50px; width: 50px; display: block;"></td>
+                                <td>@product.catagoryName</td>
+                                <td>Manage</td>
+                            </tr>
+                            i++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-end">
+                    <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

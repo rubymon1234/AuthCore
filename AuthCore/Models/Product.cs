@@ -2,9 +2,9 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using System.Drawing.Drawing2D;
-using AuthCore.Models.Common;
+using ShoppyWeb.Models.Common;
 
-namespace AuthCore.Models
+namespace ShoppyWeb.Models
 {
     public class Product : BaseModel
     {
@@ -26,5 +26,12 @@ namespace AuthCore.Models
 
         [Range(0, 5, ErrorMessage = "Rating Should be from 0 to 5 only")] //Range
         public int Ratings { get; set; }
+
+        public Guid CatagoryId { get; set; }
+
+        [ValidateNever]
+        [ForeignKey("CatagoryId")]
+        public ProductCatagory ProductCatagory { get; set; }
+
     }
 }

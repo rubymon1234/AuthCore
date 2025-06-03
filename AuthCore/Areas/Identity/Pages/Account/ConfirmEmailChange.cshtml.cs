@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace AuthCore.Areas.Identity.Pages.Account
+namespace ShoppyWeb.Areas.Identity.Pages.Account
 {
     public class ConfirmEmailChangeModel : PageModel
     {

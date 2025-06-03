@@ -1,4 +1,4 @@
-﻿namespace AuthCore.Data.ApplicationConst
+﻿namespace ShoppyWeb.Data.ApplicationConst
 {
     public class ApplicationConst
     {

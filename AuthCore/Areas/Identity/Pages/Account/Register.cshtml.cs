@@ -18,9 +18,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
-using static AuthCore.Data.ApplicationConst.ApplicationConst;
+using static ShoppyWeb.Data.ApplicationConst.ApplicationConst;
 
-namespace AuthCore.Areas.Identity.Pages.Account
+namespace ShoppyWeb.Areas.Identity.Pages.Account
 {
     public class RegisterModel : PageModel
     {

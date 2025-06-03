@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AuthCore.Models.Common
+namespace ShoppyWeb.Models.Common
 {
     public class BaseModel
     {

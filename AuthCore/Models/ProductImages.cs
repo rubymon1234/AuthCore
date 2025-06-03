@@ -1,9 +1,9 @@
-﻿using AuthCore.Models.Common;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using ShoppyWeb.Models.Common;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace AuthCore.Models
+namespace ShoppyWeb.Models
 {
     public class ProductImages : BaseModel
     {

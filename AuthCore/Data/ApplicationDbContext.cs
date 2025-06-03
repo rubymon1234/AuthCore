@@ -1,9 +1,9 @@
-﻿using AuthCore.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ShoppyWeb.Models;
 using System.Drawing.Drawing2D;
 
-namespace AuthCore.Data
+namespace ShoppyWeb.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -14,5 +14,8 @@ namespace AuthCore.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductImages> ProductImages { get; set; }
 
+        public DbSet<ProductCatagory> ProductCatagory { get; set; }
+
+        
     }
 }

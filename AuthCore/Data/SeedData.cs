@@ -3,9 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using static AuthCore.Data.ApplicationConst.ApplicationConst;
+using static ShoppyWeb.Data.ApplicationConst.ApplicationConst;
 
-namespace AuthCore.Data
+namespace ShoppyWeb.Data
 {
     public class SeedData
     {
