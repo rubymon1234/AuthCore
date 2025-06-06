@@ -387,12 +387,17 @@ namespace ShoppyWeb.Data.Migrations
             modelBuilder.Entity("ShoppyWeb.Models.ProductImages", b =>
                 {
                     b.HasOne("ShoppyWeb.Models.Product", "Product")
-                        .WithMany()
+                        .WithMany("ProductImages")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("ShoppyWeb.Models.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

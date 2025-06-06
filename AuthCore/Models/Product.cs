@@ -33,5 +33,7 @@ namespace ShoppyWeb.Models
         [ForeignKey("CatagoryId")]
         public ProductCatagory ProductCatagory { get; set; }
 
+        public ICollection<ProductImages> ProductImages { get; set; } = new List<ProductImages>();
+
     }
 }

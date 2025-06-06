@@ -1,6 +1,8 @@
 using ShoppyWeb.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using ShoppyWeb.Models.Repositories.IRepository;
+using ShoppyWeb.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureApplicationCookie(options =>
@@ -17,6 +19,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 builder.Services.AddControllersWithViews();
 

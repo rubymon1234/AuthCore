@@ -7,6 +7,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Microsoft.AspNetCore.Authorization;
+using ShoppyWeb.Models.Repositories.IRepository;
+using ShoppyWeb.Models.Repositories;
+using System;
+using System.Security.Cryptography;
 
 namespace ShoppyWeb.Areas.Customer.Controllers
 {
@@ -16,11 +20,15 @@ namespace ShoppyWeb.Areas.Customer.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbContext;
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext dbContext)
+        public HomeController(ILogger<HomeController> logger, 
+            ApplicationDbContext dbContext,
+            IProductRepository productRepository)
         {
             _logger = logger;
             _dbContext = dbContext;
+            _productRepository = productRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -29,6 +37,7 @@ namespace ShoppyWeb.Areas.Customer.Controllers
                                                   join img in _dbContext.ProductImages on p.Id equals img.ProductId
                                                   select new ProductView
                                                   {
+                                                      Id=p.Id,
                                                       ProductName = p.ProductName,
                                                       ProductCode = p.ProductCode,
                                                       Price = p.Price,
@@ -49,6 +58,21 @@ namespace ShoppyWeb.Areas.Customer.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpGet]
+        public IActionResult Details(Guid id)
+        {
+            Product products = _productRepository.GetById(id);
+
+            var ProductDetailsVm = new ProductDetailsVm {
+                pId = products.Id,
+                pName = products.ProductName,
+                pCode = products.ProductCode,
+                ImageUrl = products.ProductImages.FirstOrDefault()?.url,
+                Price = products.Price,
+                CatagoryName = products.ProductCatagory.Name
+            };
+            return View(ProductDetailsVm);
         }
     }
 }

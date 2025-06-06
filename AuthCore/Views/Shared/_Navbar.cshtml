@@ -4,25 +4,29 @@
 @{
 }
 <ul class="nav sidebar-menu flex-column"
-    data-lte-toggle="treeview"
-    role="menu"
-    data-accordion="false">
+data-lte-toggle="treeview"
+role="menu"
+data-accordion="false">
     <li class="nav-item menu-open">
-        <a href="#" class="nav-link active">
-            <i class="nav-icon bi bi-speedometer"></i>
-            <p>
-                Content Management
-                <i class="nav-arrow bi bi-chevron-right"></i>
-            </p>
-        </a>
-        <ul class="nav nav-treeview">
-            <li class="nav-item">
-                <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link active">
-                    <i class="nav-icon bi bi-circle"></i>
-                    <p>Product List</p>
-                </a>
-            </li>
+        @if (User.IsInRole(CustomRole.Admin))
+        {
+            <a href="#" class="nav-link active">
+                <i class="nav-icon bi bi-speedometer"></i>
+                <p>
+                    Content Management
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                </p>
+            </a>
+
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+            <a asp-area="Admin" asp-controller="Product" asp-action="Index" class="nav-link active">
+                <i class="nav-icon bi bi-circle"></i>
+                <p>Product List</p>
+            </a>
+        </li>
         </ul>
+        }
     </li>
     <li class="nav-item">
         <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="nav-link">
