@@ -12,6 +12,7 @@ namespace ShoppyWeb.ViewModel
 
         public int Price { get; set; }
         public string CatagoryName { get; set; }
+        public int Quantity { get; set; } = 1;
 
     }
 }

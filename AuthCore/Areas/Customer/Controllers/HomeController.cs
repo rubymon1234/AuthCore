@@ -74,5 +74,11 @@ namespace ShoppyWeb.Areas.Customer.Controllers
             };
             return View(ProductDetailsVm);
         }
+        [HttpPost]
+        public IActionResult Details(ProductDetailsVm productDetailsVm)
+        {
+            
+            return RedirectToAction("Index");
+        }
     }
 }
