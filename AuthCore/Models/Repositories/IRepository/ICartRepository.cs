@@ -5,6 +5,6 @@ namespace ShoppyWeb.Models.Repositories.IRepository
 {
     public interface ICartRepository
     {
-        Cart Create(Cart cart);
+        //Cart Create(Cart cart);
     }
 }

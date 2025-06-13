@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ShoppyWeb.Models.Repositories.IRepository;
 using ShoppyWeb.Models.Repositories;
+using ShoppyWeb.Programs;
+using Microsoft.AspNetCore.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureApplicationCookie(options =>
@@ -27,6 +29,19 @@ var app = builder.Build();
 var serviceProvider = app.Services;
 
 await SeedData.SeedRole(serviceProvider);
+app.Map("/programs", a =>
+{
+    a.Run(async (context) =>
+    {
+        await context.Response.WriteAsync("**********");
+        Programs program = new Programs();
+       // string outputString = program.Reverse("ddfe");
+        string outputStringq = program.palindrome("rub");
+        //await context.Response.WriteAsync(outputString +"**********");
+        await context.Response.WriteAsync(outputStringq + "**********");
+    });
+});
+//tamilselven
 //to seed 
 //UpdateDatabaseAsync(app);
 

@@ -15,17 +15,17 @@ namespace ShoppyWeb.Models.Repositories
             _dbContext = dbContext;
             _userManager = userManager;
         }
-        public async Cart Create(Cart cartData)
-        {
-            var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            Cart cart = new Cart();
-            cart.UserId = user?.Id;
-            cart.IsActive = 1;
-            _dbContext.Cart.Add(cart);
-            await _dbContext.SaveChangesAsync();
-            var id = cart.Id;
+        //public async Cart Create(Cart cartData)
+        //{
+        //    var user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+        //    Cart cart = new Cart();
+        //    cart.UserId = user?.Id;
+        //    cart.IsActive = 1;
+        //    _dbContext.Cart.Add(cart);
+        //    await _dbContext.SaveChangesAsync();
+        //    var id = cart.Id;
 
-
-        }
+        //    return cart;
+        //}
     }
 }
