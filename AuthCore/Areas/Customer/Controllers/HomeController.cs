@@ -21,14 +21,17 @@ namespace ShoppyWeb.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _dbContext;
         private readonly IProductRepository _productRepository;
+        private readonly ICartDetailsRepository _cartDetailsRepository;
 
         public HomeController(ILogger<HomeController> logger, 
             ApplicationDbContext dbContext,
-            IProductRepository productRepository)
+            IProductRepository productRepository,
+            ICartDetailsRepository cartDetailsRepository)
         {
             _logger = logger;
             _dbContext = dbContext;
             _productRepository = productRepository;
+            _cartDetailsRepository = cartDetailsRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -77,7 +80,7 @@ namespace ShoppyWeb.Areas.Customer.Controllers
         [HttpPost]
         public IActionResult Details(ProductDetailsVm productDetailsVm)
         {
-            
+            Task<CartDetails> cartDetails = _cartDetailsRepository.Create(productDetailsVm);
             return RedirectToAction("Index");
         }
     }

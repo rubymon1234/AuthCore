@@ -5,6 +5,8 @@ using ShoppyWeb.Models.Repositories.IRepository;
 using ShoppyWeb.Models.Repositories;
 using ShoppyWeb.Programs;
 using Microsoft.AspNetCore.Http;
+using System.Text;
+using ShoppyWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.ConfigureApplicationCookie(options =>
@@ -22,6 +24,10 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<ICartDetailsRepository , CartDetailsRepository>();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllersWithViews();
 
@@ -33,12 +39,18 @@ app.Map("/programs", a =>
 {
     a.Run(async (context) =>
     {
+        
         await context.Response.WriteAsync("**********");
         Programs program = new Programs();
-       // string outputString = program.Reverse("ddfe");
-        string outputStringq = program.palindrome("rub");
+        // string outputString = program.Reverse("ddfe");
+        List<KeyValuePair<int, string>> outputStringq = await program.Collections();
         //await context.Response.WriteAsync(outputString +"**********");
-        await context.Response.WriteAsync(outputStringq + "**********");
+        StringBuilder htmlBuilder = new StringBuilder();
+        foreach (var item in outputStringq)
+        {
+            await context.Response.WriteAsync(item.Key + "**********"+ item.Value+"/n");
+        }
+       await context.Response.WriteAsync(outputStringq + "**********");
     });
 });
 //tamilselven

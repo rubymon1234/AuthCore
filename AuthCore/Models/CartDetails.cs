@@ -14,12 +14,6 @@ namespace ShoppyWeb.Models
         [ValidateNever]
         [ForeignKey("UserId")]
         public IdentityUser User { get; set; }
-        
-        [Required]
-        public Guid CartId { get; set; }
-        [ValidateNever]
-        [ForeignKey("CartId")]
-        public Cart Cart { get; set; }
 
         [Required]
         public int Quantity { get; set; }

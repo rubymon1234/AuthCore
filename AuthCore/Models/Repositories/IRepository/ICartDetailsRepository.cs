@@ -1,6 +1,9 @@
-﻿namespace ShoppyWeb.Models.Repositories.IRepository
+﻿using ShoppyWeb.ViewModel;
+
+namespace ShoppyWeb.Models.Repositories.IRepository
 {
-    public class ICartDetailsRepository
+    public interface ICartDetailsRepository 
     {
+        Task<CartDetails> Create(ProductDetailsVm cart);
     }
 }
