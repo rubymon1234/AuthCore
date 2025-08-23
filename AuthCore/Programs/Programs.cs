@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -51,6 +52,23 @@ namespace ShoppyWeb.Programs
             }
             await Task.Delay(1);
             return myList;
+
+        }
+
+        public int printMaxNumber()
+        {
+            int[] num = {90,100,20,40};
+            int highestnum = num[0];
+            int secondhight = num[0];
+            foreach (int i in num)
+            {
+                if (highestnum <= i)
+                {
+                    secondhight = highestnum;
+                    highestnum = i;
+                }
+            }
+            return secondhight;
 
         }
     }

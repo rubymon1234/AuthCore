@@ -19,6 +19,7 @@
           href="https://cdn.jsdelivr.net/npm/jsvectormap@1.5.3/dist/css/jsvectormap.min.css"
           integrity="sha256-+uGLJmmTKOqBr+2E6KDYs/NRsHxSkONXFHUL0fy2O/4="
           crossorigin="anonymous" />
+   
 </head>
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
     <div class="app-wrapper">
@@ -73,9 +74,12 @@
             </div>
             <div class="app-content">
                 <div class="container-fluid">
+
+                    <partial name="_Notification" />
                     @RenderBody()
                 </div>
             </div>
+            
         </main>
         <footer class="app-footer">
             <div class="float-end d-none d-sm-inline">Anything you want</div>
@@ -86,6 +90,7 @@
         </footer>
     </div>
     <script src="~/dist/js/adminlte.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     
     <script src="~/js/Common.js"></script>

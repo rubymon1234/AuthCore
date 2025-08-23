@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ShoppyWeb.Data;
+using ShoppyWeb.Models;
+using ShoppyWeb.Models.Repositories.IRepository;
 
 namespace ShoppyWeb.Areas.Customer.Controllers
 {
@@ -8,9 +12,18 @@ namespace ShoppyWeb.Areas.Customer.Controllers
     [Area("Customer")]
     public class CartController : Controller
     {
+        private readonly ICartDetailsRepository _cartDetailsRepository;
+        private readonly ApplicationDbContext _dbContext;
+
+        public CartController(ICartDetailsRepository cartDetailsRepository, ApplicationDbContext dbContext)
+        {
+            _cartDetailsRepository = cartDetailsRepository;
+            _dbContext = dbContext;
+        }
         // GET: CartController
         public ActionResult Index()
         {
+            ViewBag.Products = _cartDetailsRepository.getAllCartDetails();
             return View();
         }
 
@@ -19,7 +32,51 @@ namespace ShoppyWeb.Areas.Customer.Controllers
         {
             return View();
         }
-
+        public async Task<IActionResult> Plus(Guid cartId)
+        {
+            //get Cart details
+            var cartDetails = await _dbContext.CartDetails.FirstOrDefaultAsync(cd => cd.Id == cartId);
+            if (cartDetails.Quantity >1)
+            {
+                cartDetails.Quantity += 1;
+                _dbContext.CartDetails.Update(cartDetails);
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                _dbContext.CartDetails.Remove(cartDetails);
+                await _dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Minus(Guid cartId)
+        {
+            //get Cart details
+            var cartDetails = await _dbContext.CartDetails.FirstOrDefaultAsync(cd => cd.Id == cartId);
+            if (cartDetails.Quantity > 1)
+            {
+                cartDetails.Quantity -= 1;
+                _dbContext.CartDetails.Update(cartDetails);
+                await _dbContext.SaveChangesAsync();
+            }
+            else
+            {
+                _dbContext.CartDetails.Remove(cartDetails);
+                await _dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> DeleteCartItem(Guid cartId)
+        {
+            //get Cart details
+            var cartDetails = await _dbContext.CartDetails.FirstOrDefaultAsync(cd => cd.Id == cartId);
+            if (cartDetails != null)
+            {
+                _dbContext.CartDetails.Remove(cartDetails);
+                await _dbContext.SaveChangesAsync();
+            }
+            return RedirectToAction("Index");
+        }
         // GET: CartController/Create
         public ActionResult Create()
         {

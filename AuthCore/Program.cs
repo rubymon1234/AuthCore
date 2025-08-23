@@ -40,17 +40,17 @@ app.Map("/programs", a =>
     a.Run(async (context) =>
     {
         
-        await context.Response.WriteAsync("**********");
+        await context.Response.WriteAsync("********** ");
         Programs program = new Programs();
-        // string outputString = program.Reverse("ddfe");
-        List<KeyValuePair<int, string>> outputStringq = await program.Collections();
+         int outputString = program.printMaxNumber();
+        //List<KeyValuePair<int, string>> outputStringq = await program.Collections();
         //await context.Response.WriteAsync(outputString +"**********");
-        StringBuilder htmlBuilder = new StringBuilder();
-        foreach (var item in outputStringq)
-        {
-            await context.Response.WriteAsync(item.Key + "**********"+ item.Value+"/n");
-        }
-       await context.Response.WriteAsync(outputStringq + "**********");
+        //StringBuilder htmlBuilder = new StringBuilder();
+        //foreach (var item in outputStringq)
+        //{
+        //    await context.Response.WriteAsync(item.Key + "**********"+ item.Value+"/n");
+        //}
+       await context.Response.WriteAsync(outputString + " **********");
     });
 });
 //tamilselven

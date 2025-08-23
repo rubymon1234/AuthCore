@@ -1,4 +1,5 @@
-﻿using ShoppyWeb.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using ShoppyWeb.Data;
 using ShoppyWeb.Models.Repositories.IRepository;
 using ShoppyWeb.Services;
 using ShoppyWeb.ViewModel;
@@ -21,15 +22,15 @@ namespace ShoppyWeb.Models.Repositories
         public async Task<CartDetails> Create(ProductDetailsVm cartData)
         {
             Guid userId = _userService.GetCurrentUserId();
-            if (userId != Guid.Empty) // Fix: Check if userId is not empty  
-            {
+            //if (userId != Guid.Empty) // Fix: Check if userId is not empty  
+            //{
                 // Add to cart  
                 int totalPrice = cartData.Price * cartData.Quantity;
                 CartDetails cartDetails = new CartDetails
                 {
                     UserId = userId.ToString(), // Fix: Convert Guid to string for CartDetails.UserId  
                     Quantity = cartData.Quantity,
-                    TotalPrice = totalPrice,
+                    TotalPrice = cartData.Price,
                     Status = "1",
                     PaymentStatus = "pending",
                     ProductId = cartData.pId
@@ -38,9 +39,21 @@ namespace ShoppyWeb.Models.Repositories
                 await _dbContext.SaveChangesAsync();
 
                 return cartDetails;
-            }
+            //}
 
             // Fix: Return null or throw an exception if userId is empty  
+           // return null;
+        }
+
+        public List<CartDetails> getAllCartDetails()
+        {
+            return _dbContext.CartDetails
+                .Include(c => c.Product)
+                .Include(c => c.Product.ProductImages)
+                .Take(100).ToList();
+        }
+        public List<CartDetails> Get(string cartId)
+        {
             return null;
         }
     }
