@@ -1,5 +1,8 @@
-﻿@{
-    List<CartDetails> cartDetails = ViewBag.Products;
+﻿@using ShoppyWeb.ViewModel
+﻿
+@model PaginatedList<CartDetailsViewModel>
+@{
+    // List<CartDetails> cartDetails = ViewBag.Products;
 }
 <form method="post">
     <br />
@@ -14,7 +17,7 @@
 
             </div>
         </div>
-        @if (@cartDetails?.Count() > 0)
+        @if (Model.Items?.Count() > 0)
         {
             <div class="card-body my-4">
                 <div class="row">
@@ -27,18 +30,18 @@
                         @{
                             int grandTotal = 0; int grandsTotal = 0;
                         }
-                        @foreach (var product in cartDetails)
+                        @foreach (var product in Model.Items)
                         {
                             grandsTotal = 0;
                             grandTotal += @product.Quantity * @product.TotalPrice;
                             grandsTotal += @product.Quantity * @product.TotalPrice;
                             <div class="row border-bottom pb-3">
                                 <div class="d-none d-lg-block col-lg-1 text-center py-2">
-                                    <img src="\@product.Product.ProductImages.First().url" data-holder-rendered="true" class="rounded" width="100%" />
+                                    <img src="\@product.url" data-holder-rendered="true" class="rounded" width="100%" />
                                 </div>
                                 <div class="col-12 col-lg-6 pt-md-3">
-                                    <h5 class="text-uppercase text-secondary"><strong>@product.Product.ProductName</strong></h5>
-                                    <p><small>Contrary to popular belief <b>@product.Product.ProductName</b></small></p>
+                                    <h5 class="text-uppercase text-secondary"><strong>@product.ProductName</strong></h5>
+                                    <p><small>Contrary to popular belief <b>@product.ProductName</b></small></p>
                                 </div>
                                 <div class="col-12  col-lg-5 text-center row">
                                     <div class="col-3 text-md-right pt-2 pt-md-4">
@@ -123,4 +126,55 @@
            
         }
 
+        @*Paging*@
+        <div class="row">
+            <div class="col-md-6">
+            </div>
+            <div class="col-md-6">
+                <nav>
+                    <ul class="pagination justify-content-end">
+                        <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                            <a class="page-link text-black" asp-route-pageNumber="1"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                <span>First</span>
+                            </a>
+                        </li>
+
+                        <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                            <a class="page-link text-black" asp-route-pageNumber="@(Model.PageIndex - 1)"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                <span>Previous</span>
+                            </a>
+                        </li>
+
+                        @for (int i = 1; i <= Model.TotalPages; i++)
+                        {
+                            <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                                <a class="page-link text-black" asp-route-pageNumber="@i"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]">@i</a>
+                            </li>
+                        }
+
+                        <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                            <a class="page-link text-black" asp-route-pageNumber="@(Model.PageIndex + 1)"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                <span>Next</span>
+                            </a>
+                        </li>
+                        <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                            <a class="page-link text-black" asp-route-pageNumber="@Model.TotalPages"
+                               asp-route-sortOrder="@ViewData["CurrentSort"]"
+                               asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                <span>Last</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        </div>
 </form>

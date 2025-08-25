@@ -45,12 +45,39 @@ namespace ShoppyWeb.Models.Repositories
            // return null;
         }
 
-        public List<CartDetails> getAllCartDetails()
+        public IQueryable<CartDetailsViewModel> getAllCartDetails()
         {
-            return _dbContext.CartDetails
-                .Include(c => c.Product)
-                .Include(c => c.Product.ProductImages)
-                .Take(100).ToList();
+            //return _dbContext.CartDetails
+            //    .Include(c => c.Product)
+            //    .Include(c => c.Product.ProductImages)
+            //    .Take(100).ToList();
+           var cartDetails = _dbContext.CartDetails.Include(c => c.Product).Include(c => c.Product.ProductImages).Select(
+                    cart => new CartDetailsViewModel {
+                        Id = cart.Id,
+                        ProductName = cart.Product.ProductName,
+                        url = cart.Product.ProductImages.First().url,
+                        Title = null,
+                        Description = null,
+                        Quantity = cart.Quantity,
+                        TotalPrice = cart.TotalPrice
+                    }
+                );
+            //List< CartDetailsViewModel> cartDetailsViewModels = new List<CartDetailsViewModel>();
+            //foreach (var cartDetail in cartDetails)
+            //{
+            //    var cartDetailsViewModel = new CartDetailsViewModel
+            //    {
+            //        Id = cartDetail.Id,
+            //        ProductName = cartDetail.product.Id,
+            //    }
+
+            //        //ProductImages
+            //        //Title
+            //        //Description
+            //        //Quantity
+            //        //TotalPrice
+            //}
+            return cartDetails;
         }
         public List<CartDetails> Get(string cartId)
         {

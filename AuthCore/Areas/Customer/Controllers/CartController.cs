@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using ShoppyWeb.Data;
 using ShoppyWeb.Models;
 using ShoppyWeb.Models.Repositories.IRepository;
+using ShoppyWeb.ViewModel;
 
 namespace ShoppyWeb.Areas.Customer.Controllers
 {
@@ -17,14 +18,31 @@ namespace ShoppyWeb.Areas.Customer.Controllers
 
         public CartController(ICartDetailsRepository cartDetailsRepository, ApplicationDbContext dbContext)
         {
+            
+
             _cartDetailsRepository = cartDetailsRepository;
             _dbContext = dbContext;
         }
         // GET: CartController
-        public ActionResult Index()
+        public async Task<IActionResult> Index(string searchString, string sortOrder, int pageNumber, string currentFilter)
         {
-            ViewBag.Products = _cartDetailsRepository.getAllCartDetails();
-            return View();
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+            var cartDetails = _cartDetailsRepository.getAllCartDetails();
+
+            // Ensure pageNumber is at least 1
+            if (pageNumber < 1)
+            {
+                pageNumber = 1;
+            }
+            int pageSize = 5;
+            return View(await PaginatedList<CartDetailsViewModel>.CreateAsync(cartDetails, pageNumber, pageSize));
         }
 
         // GET: CartController/Details/5
