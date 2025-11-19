@@ -1,0 +1,94 @@
+﻿@using ShoppyWeb.ViewModel
+@{
+    ViewData["Title"] = "Create Role";
+}
+@model PaginatedList<ListRoleViewModel>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">Bordered Table</h3>
+                <a class="btn btn-primary float-end" asp-controller="Product" asp-action="Create" role="button">Create Product</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Role Code</th>
+                            <th scope="col">Manage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int j = 1;
+                        }
+                        @foreach (var role in Model.Items)
+                        {
+                            <tr>
+                                <th scope="row">@j</th>
+                                <td>@role.Name</td>
+                                <td>@role.NormalizedName</td>
+                                <td>View Permission</td>
+                            </tr>
+                            j++;
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+            @*Paging*@
+            <div class="row">
+                <div class="col-md-6">
+                </div>
+                <div class="col-md-6">
+                    <nav>
+                        <ul class="pagination justify-content-end">
+                            <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                                <a class="page-link text-black" asp-route-pageNumber="1"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                    <span>First</span>
+                                </a>
+                            </li>
+
+                            <li class="page-item @(Model.HasPreviousPage ? "" : "disabled")">
+                                <a class="page-link text-black" asp-route-pageNumber="@(Model.PageIndex - 1)"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                    <span>Previous</span>
+                                </a>
+                            </li>
+
+                            @for (int i = 1; i <= Model.TotalPages; i++)
+                            {
+                                <li class="page-item @(Model.PageIndex == i ? "active" : "")">
+                                    <a class="page-link text-black" asp-route-pageNumber="@i"
+                                       asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                       asp-route-currentFilter="@ViewData["CurrentFilter"]">@i</a>
+                                </li>
+                            }
+
+                            <li class="page-item @(Model.HasNextPage ? "" : "disabled")">
+                                <a class="page-link text-black" asp-route-pageNumber="@(Model.PageIndex + 1)"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                    <span>Next</span>
+                                </a>
+                            </li>
+                            <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                                <a class="page-link text-black" asp-route-pageNumber="@Model.TotalPages"
+                                   asp-route-sortOrder="@ViewData["CurrentSort"]"
+                                   asp-route-currentFilter="@ViewData["CurrentFilter"]">
+                                    <span>Last</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

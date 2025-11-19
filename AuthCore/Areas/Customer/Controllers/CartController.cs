@@ -157,5 +157,9 @@ namespace ShoppyWeb.Areas.Customer.Controllers
                 return View();
             }
         }
+        public ActionResult Checkout()
+        {
+            return View();
+        }
     }
 }
