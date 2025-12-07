@@ -15,19 +15,28 @@ builder.Services.ConfigureApplicationCookie(options =>
     //options.AccessDeniedPath = "/Account/AccessDenied";
 });
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+//var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//    options.UseSqlServer(connectionString));
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICartDetailsRepository , CartDetailsRepository>();
+
 builder.Services.AddScoped<IRoleRepository , RoleRepository>();
+builder.Services.AddScoped<IPermissionRepository , PermissionRepository>();
+builder.Services.AddScoped<IRolePermissionsRepository, RolePermissionsRepository>();
+
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<UserService>();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllersWithViews();

@@ -8,22 +8,27 @@ namespace ShoppyWeb.Models.Repositories
 {
     public class CartDetailsRepository : ICartDetailsRepository
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly ApplicationDbContext _dbContext;
         private readonly UserService _userService;
 
-        public CartDetailsRepository(UserService userService, IHttpContextAccessor httpContextAccessor, ApplicationDbContext dbContext)
+        public CartDetailsRepository(IServiceScopeFactory scopeFactory, UserService userService, ApplicationDbContext dbContext)
         {
-            _httpContextAccessor = httpContextAccessor;
+            _scopeFactory = scopeFactory;
             _dbContext = dbContext;
             _userService = userService;
         }
 
         public async Task<CartDetails> Create(ProductDetailsVm cartData)
         {
-            Guid userId = _userService.GetCurrentUserId();
-            //if (userId != Guid.Empty) // Fix: Check if userId is not empty  
-            //{
+            try
+            {
+                // Create a new scope for this operation
+                using var scope = _scopeFactory.CreateScope();
+                var _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+                Guid userId = _userService.GetCurrentUserId();
+                DateTime localNow = DateTime.Now;
                 // Add to cart  
                 int totalPrice = cartData.Price * cartData.Quantity;
                 CartDetails cartDetails = new CartDetails
@@ -33,16 +38,35 @@ namespace ShoppyWeb.Models.Repositories
                     TotalPrice = cartData.Price,
                     Status = "1",
                     PaymentStatus = "pending",
-                    ProductId = cartData.pId
+                    ProductId = cartData.pId,
+                    CreatedOn = localNow,
+                    ModifiedOn = localNow,
+                    CreatedBy = userId.ToString()
                 };
-                _dbContext.CartDetails.Add(cartDetails);
-                await _dbContext.SaveChangesAsync();
-
-                return cartDetails;
-            //}
-
-            // Fix: Return null or throw an exception if userId is empty  
-           // return null;
+                 _dbContext.CartDetails.Add(cartDetails);
+                int rowsAffected = await _dbContext.SaveChangesAsync();
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine($"Database updated successfully. {rowsAffected} row(s) affected.");
+                    return cartDetails;
+                }
+                else
+                {
+                    Console.WriteLine("No changes were saved to the database.");
+                }
+            return null;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the detailed error
+                Console.WriteLine($"Database error: {ex.InnerException?.Message ?? ex.Message}");
+                return null;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return null;
+            }
         }
 
         public IQueryable<CartDetailsViewModel> getAllCartDetails()
@@ -51,7 +75,8 @@ namespace ShoppyWeb.Models.Repositories
             //    .Include(c => c.Product)
             //    .Include(c => c.Product.ProductImages)
             //    .Take(100).ToList();
-           var cartDetails = _dbContext.CartDetails.Include(c => c.Product).Include(c => c.Product.ProductImages).Select(
+            // Create a new scope for this operation
+            var cartDetails = _dbContext.CartDetails.Include(c => c.Product).Include(c => c.Product.ProductImages).Select(
                     cart => new CartDetailsViewModel {
                         Id = cart.Id,
                         ProductName = cart.Product.ProductName,

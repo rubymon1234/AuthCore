@@ -17,5 +17,8 @@ namespace ShoppyWeb.Data
         public DbSet<ProductCatagory> ProductCatagory { get; set; }
 
         public DbSet<CartDetails> CartDetails { get; set; }
+
+        public DbSet<Permissions> Permissions { get; set; }
+        public DbSet<RolePermissions> RolePermissions { get; set; }
     }
 }

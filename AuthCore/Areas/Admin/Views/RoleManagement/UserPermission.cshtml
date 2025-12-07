@@ -1,44 +1,65 @@
 ﻿@using ShoppyWeb.ViewModel
 @{
-    ViewData["Title"] = "Create Role";
+    ViewData["Title"] = "User Permission";
+    var userRoleList = ViewBag.UserRoleList as IEnumerable<dynamic>;
+    //var list = ViewBag.UserRoleList as List<string>;
 }
-@model PaginatedList<ListRoleViewModel>
+@model PaginatedList<ListPermissionViewModel>
 
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-header">
-                <h3 class="card-title">List Role</h3>
-                <a class="btn btn-primary float-end" asp-controller="Product" asp-action="Create" role="button">Create Role</a>
+                <h3 class="card-title">User Permission</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body" >
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col" >
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">                          
+                            </th>
                             <th scope="col">Id</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Role Code</th>
+                            <th scope="col">Permission Name</th>
+                            <th scope="col">Permission Value</th>
                             <th scope="col">Manage</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @{
-                            int j = 1;
-                        }
-                        @foreach (var role in Model.Items)
+                        @if (Model.Items?.Count() == 0)
                         {
                             <tr>
-                                <th scope="row">@j</th>
-                                <th scope="row">@role.Id</th>
-                                <td>@role.Name</td>
-                                <td>@role.NormalizedName</td>
-                                <td>
-                                    <a asp-area="Admin" asp-controller="RoleManagement" asp-action="UserPermission" asp-route-id="@role.Id" class="btn btn-info">View Permission</a>
-                                </td>
+
+                                <td colspan="5"><b>No Data Found.</b></td>
                             </tr>
-                            j++;
                         }
+                        else
+                        {
+                            @foreach (var permission in Model.Items)
+                            {
+                                <tr>
+                                    @{
+                                        // var result;
+                                        // if (userRoleList != null)
+                                        // {
+                                            var result = userRoleList.Where(x => x.Id == @permission.Id).ToList();
+                                            int resultCount = result.Count;
+                                        // }
+                                    }
+                                    <td scope="row">
+                                        <input type="checkbox" class="form-check-input check" value="2185" id="permission_check_@permission.Id" name="check_@permission.Id" onclick="singleSelect('@TempData["RoleId"]','@permission.Id')" @(resultCount >0 ? "checked" : "")>
+                                        <span id="ajaxLoader_@permission.Id"></span>
+                                    </td>
+                                    <td scope="row">@permission.Id</td>
+                                    <td>@permission.DispalyName</td>
+                                    <td>@permission.PermissionName</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="RoleManagement" asp-action="ListPermission" asp-route-id="@permission.Id" class="btn btn-info">UnAssign Permission</a>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                       
                     </tbody>
                 </table>
             </div>
@@ -96,3 +117,28 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Your jQuery code goes here
+            
+        });
+        function singleSelect(RoleId, PermissionId){
+            $("#ajaxLoader_"+PermissionId).html('<img src="/dist/assets/img/process.gif" width="25px" height="30px"> <font color="#4a8bc2"></font>');
+             var SinglePermissionCheckBoxChecked = $("#permission_check_"+PermissionId).prop('checked');
+                 $.ajax({
+                    type: "POST",
+                    url: "/Admin/RoleManagement/UserPermissionAssign",
+                    data: {
+                        RoleId : RoleId ,
+                        PermissionId : PermissionId , 
+                        checkbox : SinglePermissionCheckBoxChecked
+                    },
+                    success: function(result){
+                        console.log("result", result);
+                        $("#ajaxLoader_"+PermissionId).html('');
+                    }
+        });
+        }
+    </script>
+    }

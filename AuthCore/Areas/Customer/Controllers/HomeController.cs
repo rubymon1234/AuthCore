@@ -81,8 +81,16 @@ namespace ShoppyWeb.Areas.Customer.Controllers
         public IActionResult Details(ProductDetailsVm productDetailsVm)
         {
             Task<CartDetails> cartDetails = _cartDetailsRepository.Create(productDetailsVm);
-            TempData["success"] = "Cart Item Added Successfully";
-            return RedirectToAction("Index");
+            if (cartDetails ==null)
+            {
+                TempData["error"] = "Something went wrong";
+            }
+            else
+            {
+                TempData["success"] = "Cart Item Added Successfully";
+            }
+
+            return RedirectToAction("Index", "Cart");
         }
     }
 }

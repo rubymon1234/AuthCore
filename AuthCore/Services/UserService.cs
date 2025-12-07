@@ -2,7 +2,7 @@
 
 namespace ShoppyWeb.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 

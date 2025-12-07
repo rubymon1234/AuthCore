@@ -1,15 +1,15 @@
 ﻿@using ShoppyWeb.ViewModel
 @{
-    ViewData["Title"] = "Create Role";
+    ViewData["Title"] = "List Permission";
 }
-@model PaginatedList<ListRoleViewModel>
+@model PaginatedList<ListPermissionViewModel>
 
 <div class="row">
     <div class="col-md-12">
         <div class="card mb-4">
             <div class="card-header">
-                <h3 class="card-title">List Role</h3>
-                <a class="btn btn-primary float-end" asp-controller="Product" asp-action="Create" role="button">Create Role</a>
+                <h3 class="card-title">List Permission</h3>
+                <a class="btn btn-primary float-end" asp-controller="RoleManagement" asp-action="CreatePermission" role="button">Create Permission</a>
             </div>
             <div class="card-body">
                 <table class="table table-bordered">
@@ -17,8 +17,8 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Id</th>
-                            <th scope="col">Role</th>
-                            <th scope="col">Role Code</th>
+                            <th scope="col">Permission Name</th>
+                            <th scope="col">Permission Value</th>
                             <th scope="col">Manage</th>
                         </tr>
                     </thead>
@@ -26,18 +26,28 @@
                         @{
                             int j = 1;
                         }
-                        @foreach (var role in Model.Items)
+                        @if (Model.Items?.Count() == 0)
                         {
-                            <tr>
-                                <th scope="row">@j</th>
-                                <th scope="row">@role.Id</th>
-                                <td>@role.Name</td>
-                                <td>@role.NormalizedName</td>
-                                <td>
-                                    <a asp-area="Admin" asp-controller="RoleManagement" asp-action="UserPermission" asp-route-id="@role.Id" class="btn btn-info">View Permission</a>
-                                </td>
-                            </tr>
-                            j++;
+                            <tr >
+
+                                <td colspan="5"><b>No Data Found.</b></td>
+                                </tr>
+                        }
+                        else
+                        {
+                            @foreach (var permission in Model.Items)
+                            {
+                                <tr>
+                                    <td scope="row">@j</td>
+                                    <td scope="row">@permission.Id</td>
+                                    <td>@permission.DispalyName</td>
+                                    <td>@permission.PermissionName</td>
+                                    <td>
+                                        <a asp-area="Admin" asp-controller="RoleManagement" asp-action="ListPermission" asp-route-id="@permission.Id" class="btn btn-danger">Delete Permission</a>
+                                    </td>
+                                </tr>
+                                j++;
+                            }
                         }
                     </tbody>
                 </table>

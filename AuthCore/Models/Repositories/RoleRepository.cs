@@ -19,7 +19,7 @@ namespace ShoppyWeb.Models.Repositories
             var roles = _roleManager.Roles.Select(
                     static role => new ListRoleViewModel
                     {
-                        //Id = role.Id,
+                        Id = role.Id,
                         Name = role.Name,
                         NormalizedName = role.NormalizedName
                     }

@@ -1,0 +1,37 @@
+﻿@using ShoppyWeb.ViewModel
+@{
+    ViewData["Title"] = "Create Permission";
+}
+@model CreatePermissionViewModel
+
+<div class="container">
+    <div class="row">
+        <h1 class="display-4">Create Permission</h1>
+    </div>
+    <div class="row">
+        <form method="post" id="CreatePermission" action="CreatePermission" class="form-control" enctype="multipart/form-data">
+            <input type="hidden" name="Id" asp-for="Id" />
+            <div class="form-group">
+                <label for="exampleFormControlInput1">Enter Displ</label>
+                <input type="text" class="form-control" name="DisplayName" id="DisplayName" asp-for="DisplayName" placeholder="DisplayName" />
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Enter Permission Name</label>
+                <input type="text" class="form-control" name="PermissionName" id="PermissionName" placeholder="Permission Name" for="PermissionName" />
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect2">Enter Description</label>
+                <input type="text" for="Description" class="form-control" id="Description" name="Description" placeholder="Description" />
+            </div>
+            <br />
+            <hr />
+            <!-- Submit Form -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Create</button>
+                <a class="btn btn-primary" asp-area="Admin" asp-controller="RoleManagement" asp-action="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
